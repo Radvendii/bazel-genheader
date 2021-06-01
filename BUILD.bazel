@@ -4,20 +4,24 @@ genrule(
     cmd = """
 cat > $@ << "EOF"
 #! /bin/sh
-sed -e 's#@TO_BE_GENERATED@#(10 + NORMAL_CONST)#g' \
-    -e 's#normalheader.h#src/normalheader.h#'
+sed -e 's#@TO_BE_GENERATED@#(10 + NORMAL_CONST)#g'
 EOF""",
 )
 
 genrule(
     name = "genheader_h",
     srcs = [ "src/genheader.h.in" ],
-    outs = [ "genheader.h" ],
+    outs = [ "src/genheader.h" ],
     cmd = "$(location :gen_sh) < $(<) > $(@)",
     tools = [ ":gen_sh" ],
 )
 
 cc_binary(
     name = "main",
-    srcs = glob(["src/*.c", "src/*.h"]) + [ "genheader.h" ],
+    srcs = glob(["src/*.c", "src/*.h"]), # possibly with + [ "src/genheader.h" ], though that doesn't seem to change anything
 )
+
+# fails with:
+# src/main.c:1:10: fatal error: genheader.h: No such file or directory
+#     1 | #include "genheader.h"
+#       |          ^~~~~~~~~~~~~
