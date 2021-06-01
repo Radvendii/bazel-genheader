@@ -1,0 +1,8 @@
+#ifndef GENHEADER_H_
+#define GENHEADER_H_
+
+#include "normalheader.h"
+
+#define GEN_CONST @TO_BE_GENERATED@
+
+#endif // GENHEADER_H_

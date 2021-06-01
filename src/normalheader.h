@@ -1,0 +1,6 @@
+#ifndef NORMALHEADER_H_
+#define NORMALHEADER_H_
+
+#define NORMAL_CONST 10
+
+#endif // NORMALHEADER_H_
